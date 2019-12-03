@@ -1,5 +1,6 @@
 package com.etien.mykotlinapplication2
 
+import android.graphics.Color
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -17,15 +18,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        /*fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }*/
-
-        val buttonClick = findViewById<Button>(R.id.helloButton)
+        var buttonClick = findViewById<Button>(R.id.helloButton)
         buttonClick?.setOnClickListener{
             Toast.makeText(this, "Click...", Toast.LENGTH_LONG).show()
         }
+
+        buttonClick.text = getString(R.string.new_button_name)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

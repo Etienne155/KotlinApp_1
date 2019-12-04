@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="1000dp"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="30dp">
 
         <TextView
             android:text="@string/text_about"
@@ -20,3 +20,5 @@
     </LinearLayout>
 
 </ScrollView>
+
+    

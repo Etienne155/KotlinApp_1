@@ -3,7 +3,13 @@
     <string name="app_name">APOD</string>
     <string name="action_settings">Paramètres</string>
     <string name="action_about">À propos</string>
-    <string name="text_settings">Voici les réglages.</string>
-    <string name="text_about">Cette application a été développée par Étienne Monette.</string>
-
+    <string name="text_settings">
+        Voici les réglages.
+    </string>
+    <string name="text_about">
+        Cette application a été développée par Étienne Monette.
+        \n\nUn appel à l\'API de la \"NASA Picture of the Day\" est effectué.
+        Cette application est une version réduite de Star Now, qui a été développée par le même développeur.
+        \n\nLe langage Kotlin a été employé avec des XML Layout.
+    </string>
 </resources>

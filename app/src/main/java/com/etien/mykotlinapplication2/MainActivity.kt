@@ -1,15 +1,16 @@
 package com.etien.mykotlinapplication2
 
-import android.graphics.Color
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.Toast
-
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import org.json.JSONObject
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,12 +19,39 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        var buttonClick = findViewById<Button>(R.id.helloButton)
-        buttonClick?.setOnClickListener{
-            Toast.makeText(this, "Click...", Toast.LENGTH_LONG).show()
-        }
+        val urlAPOD = "https://api.nasa.gov/planetary/apod?api_key=UFMUzL1CFPs2aarVh9nQAqwi9ASq2UUi5eRCGowh"
 
-        buttonClick.text = getString(R.string.new_button_name)
+        var textCopyright = findViewById<TextView>(R.id.textCopyright)
+        val buttonHello = findViewById<Button>(R.id.buttonHello)
+        val imageAPOD = findViewById<ImageView>(R.id.imageAPOD)
+
+        buttonHello?.setOnClickListener{
+
+            doAsync {
+
+                val data = URL(urlAPOD).readText()
+                val json = JSONObject(data)
+
+                val apodData = APODData(
+                    json.get("copyright").toString(),
+                    json.get("date").toString(),
+                    json.get("explanation").toString(),
+                    json.get("media_type").toString(),
+                    json.get("title").toString(),
+                    json.get("url").toString()
+                )
+
+                uiThread {
+                    textCopyright.setText("Copyright: " + apodData.copyright)
+
+                    Picasso
+                        .get()
+                        .load(apodData.url)
+                        .into(imageAPOD)
+
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -41,4 +69,5 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }

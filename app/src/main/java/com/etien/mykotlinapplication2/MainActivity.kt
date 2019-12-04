@@ -44,10 +44,14 @@ class MainActivity : AppCompatActivity() {
                 uiThread {
                     textCopyright.setText("Copyright: " + apodData.copyright)
 
-                    Picasso
-                        .get()
-                        .load(apodData.url)
-                        .into(imageAPOD)
+                    if (apodData.media_type == "image") {
+                        Picasso
+                            .get()
+                            .load(apodData.url)
+                            .into(imageAPOD)
+                    } else {
+                        Toast.makeText(this@MainActivity, "Video", Toast.LENGTH_SHORT).show()
+                    }
 
                 }
             }

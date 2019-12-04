@@ -21,41 +21,45 @@ class MainActivity : AppCompatActivity() {
 
         val urlAPOD = "https://api.nasa.gov/planetary/apod?api_key=UFMUzL1CFPs2aarVh9nQAqwi9ASq2UUi5eRCGowh"
 
-        var textCopyright = findViewById<TextView>(R.id.textCopyright)
-        val buttonHello = findViewById<Button>(R.id.buttonHello)
-        val imageAPOD = findViewById<ImageView>(R.id.imageAPOD)
+        var textViewTitle = findViewById<TextView>(R.id.textViewTitle)
+        var textViewDate = findViewById<TextView>(R.id.textViewDate)
+        var imagedujour = findViewById<ImageView>(R.id.imagedujour)
+        var textViewExplanation = findViewById<TextView>(R.id.textViewExplanation)
+        var textViewCopyright = findViewById<TextView>(R.id.textViewCopyright)
 
-        buttonHello?.setOnClickListener{
 
-            doAsync {
+        doAsync {
 
-                val data = URL(urlAPOD).readText()
-                val json = JSONObject(data)
+            val data = URL(urlAPOD).readText()
+            val json = JSONObject(data)
 
-                val apodData = APODData(
-                    json.get("copyright").toString(),
-                    json.get("date").toString(),
-                    json.get("explanation").toString(),
-                    json.get("media_type").toString(),
-                    json.get("title").toString(),
-                    json.get("url").toString()
-                )
+            val apodData = APODData(
+                json.get("copyright").toString(),
+                json.get("date").toString(),
+                json.get("explanation").toString(),
+                json.get("media_type").toString(),
+                json.get("title").toString(),
+                json.get("url").toString()
+            )
 
-                uiThread {
-                    textCopyright.setText("Copyright: " + apodData.copyright)
+            uiThread {
+                textViewTitle.setText(apodData.title)
+                textViewDate.setText(apodData.date)
+                textViewExplanation.setText(apodData.explanation)
+                textViewCopyright.setText("Copyright: " + apodData.copyright)
 
-                    if (apodData.media_type == "image") {
-                        Picasso
-                            .get()
-                            .load(apodData.url)
-                            .into(imageAPOD)
-                    } else {
-                        Toast.makeText(this@MainActivity, "Video", Toast.LENGTH_SHORT).show()
-                    }
-
+                if (apodData.media_type == "image") {
+                    Picasso
+                        .get()
+                        .load(apodData.url)
+                        .into(imagedujour)
+                } else {
+                    Toast.makeText(this@MainActivity, "Video", Toast.LENGTH_SHORT).show()
                 }
+
             }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
